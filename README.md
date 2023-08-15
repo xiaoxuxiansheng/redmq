@@ -1,6 +1,6 @@
 # redmq
 <p align="center">
-<img src="https://github.com/xiaoxuxiansheng/redmq/img/redmq_frame.png" height="400px/"><br/><br/>
+<img src="https://github.com/xiaoxuxiansheng/redmq/blob/main/img/redmq_frame.png" height="400px/"><br/><br/>
 <b>redmq: 纯 redis 实现的消息队列</b>
 <br/><br/>
 </p>
@@ -34,8 +34,38 @@ func main(){
 ```
 
 - 启动生产者 producer<br/><br/>
+```go
+import (
+	"context"
+
+	"github.com/xiaoxuxiansheng/redmq"
+)
+func main(){
+    // ...
+	producer := redmq.NewProducer(redisClient, redmq.WithMsgQueueLen(10))
+	ctx := context.Background()
+	msgID, err := producer.SendMsg(ctx, topic, "test_kk", "test_vv")
+}
+```
 
 - 启动消费者 consumer<br/><br/>
+```go
+import (
+	"github.com/xiaoxuxiansheng/redmq"
+)
+func main(){
+    // ...
+    // 构造并启动消费者
+	consumer, _ := redmq.NewConsumer(redisClient, topic, consumerGroup, consumerID, callbackFunc,
+		// 每条消息最多重试 2 次
+		redmq.WithMaxRetryLimit(2),
+		// 每轮接收消息的超时时间为 2 s
+		redmq.WithReceiveTimeout(2*time.Second),
+		// 注入自定义实现的死信队列
+		redmq.WithDeadLetterMailbox(demoDeadLetterMailbox))
+	defer consumer.Stop()
+}
+```
 
 ## 🐧 使用示例
 完整的使用示例代码也可以参见 package example：
