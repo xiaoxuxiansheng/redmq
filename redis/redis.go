@@ -97,7 +97,7 @@ func (c *Client) XADD(ctx context.Context, topic string, maxLen int, key, val st
 	}
 	defer conn.Close()
 
-	return redis.String(conn.Do("XADD", topic, "*", key, val))
+	return redis.String(conn.Do("XADD", topic, "MAXLEN", maxLen, "*", key, val))
 }
 
 func (c *Client) XACK(ctx context.Context, topic, groupID, msgID string) error {
