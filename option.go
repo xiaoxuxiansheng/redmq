@@ -66,7 +66,7 @@ func WithHandleMsgsTimeout(timeout time.Duration) ConsumerOption {
 }
 
 func repairConsumer(opts *ConsumerOptions) {
-	if opts.receiveTimeout <= 0 {
+	if opts.receiveTimeout < 0 {
 		opts.receiveTimeout = 2 * time.Second
 	}
 
