@@ -7,7 +7,7 @@
 
 ## 📚 前言
 使用此 sdk 进行实践前，建议先行了解与 redis streams 有关的特性，做到知行合一<br/><br/>
-<a href="https://redis.io/docs/data-types/streams/">redis stream</a> <br/><br/>
+<a href="https://redis.io/docs/data-types/streams/">redis streams</a> <br/><br/>
 
 ## 💡 `redmq` 技术原理
 <a href="https://xxxx">基于 redis 实现消息队列</a> <br/><br/>
