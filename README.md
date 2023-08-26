@@ -10,7 +10,7 @@
 <a href="https://redis.io/docs/data-types/streams/">redis streams</a> <br/><br/>
 
 ## 💡 `redmq` 技术原理
-<a href="https://xxxx">基于 redis 实现消息队列</a> <br/><br/>
+<a href="https://mp.weixin.qq.com/s?__biz=MzkxMjQzMjA0OQ==&mid=2247484622&idx=1&sn=e5199a4d0276a9aef8630ac9f781c48f">基于 redis 实现消息队列</a> <br/><br/>
 
 ## 🖥 接入 sop
 用户需要先行完成 topic 和 consumer group 的创建<br/><br/>
