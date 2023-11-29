@@ -46,6 +46,20 @@ func NewClient(network, address, password string, opts ...ClientOption) *Client 
 	}
 }
 
+func NewClientWithPool(pool *redis.Pool, opts ...ClientOption) *Client {
+	c := Client{
+		pool: pool,
+		opts: &ClientOptions{},
+	}
+
+	for _, opt := range opts {
+		opt(c.opts)
+	}
+	repairClient(c.opts)
+
+	return &c
+}
+
 func (c *Client) getRedisPool() *redis.Pool {
 	return &redis.Pool{
 		MaxIdle:     c.opts.maxIdle,
@@ -312,4 +326,14 @@ func (c *Client) Eval(ctx context.Context, src string, keyCount int, keysAndArgs
 	defer conn.Close()
 
 	return conn.Do("EVAL", args...)
+}
+
+func (c *Client) XGroupCreate(ctx context.Context, topic, group string) (string, error) {
+	conn, err := c.pool.GetContext(ctx)
+	if err != nil {
+		return "", err
+	}
+	defer conn.Close()
+
+	return redis.String(conn.Do("XGROUP", "CREATE", topic, group, "0-0"))
 }
